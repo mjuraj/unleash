@@ -8,7 +8,10 @@ import { Logger } from '../../../logger';
 import {
     CREATE_FEATURE,
     CREATE_FEATURE_STRATEGY,
+    DELETE_FEATURE_STRATEGY,
     UPDATE_FEATURE,
+    UPDATE_FEATURE_ENVIRONMENT,
+    UPDATE_FEATURE_STRATEGY,
 } from '../../../types/permissions';
 import {
     FeatureToggleDTO,
@@ -70,8 +73,16 @@ export default class ProjectFeaturesController extends Controller {
 
         // Environments
         this.get(`${PATH_ENV}`, this.getEnvironment);
-        this.post(`${PATH_ENV}/on`, this.toggleEnvironmentOn, UPDATE_FEATURE);
-        this.post(`${PATH_ENV}/off`, this.toggleEnvironmentOff, UPDATE_FEATURE);
+        this.post(
+            `${PATH_ENV}/on`,
+            this.toggleEnvironmentOn,
+            UPDATE_FEATURE_ENVIRONMENT,
+        );
+        this.post(
+            `${PATH_ENV}/off`,
+            this.toggleEnvironmentOff,
+            UPDATE_FEATURE_ENVIRONMENT,
+        );
 
         // activation strategies
         this.get(`${PATH_STRATEGIES}`, this.getStrategies);
@@ -81,9 +92,21 @@ export default class ProjectFeaturesController extends Controller {
             CREATE_FEATURE_STRATEGY,
         );
         this.get(`${PATH_STRATEGY}`, this.getStrategy);
-        this.put(`${PATH_STRATEGY}`, this.updateStrategy, UPDATE_FEATURE);
-        this.patch(`${PATH_STRATEGY}`, this.patchStrategy, UPDATE_FEATURE);
-        this.delete(`${PATH_STRATEGY}`, this.deleteStrategy, UPDATE_FEATURE);
+        this.put(
+            `${PATH_STRATEGY}`,
+            this.updateStrategy,
+            UPDATE_FEATURE_STRATEGY,
+        );
+        this.patch(
+            `${PATH_STRATEGY}`,
+            this.patchStrategy,
+            UPDATE_FEATURE_STRATEGY,
+        );
+        this.delete(
+            `${PATH_STRATEGY}`,
+            this.deleteStrategy,
+            DELETE_FEATURE_STRATEGY,
+        );
 
         // feature toggles
         this.get(PATH, this.getFeatures);
@@ -92,9 +115,9 @@ export default class ProjectFeaturesController extends Controller {
         this.post(PATH_FEATURE_CLONE, this.cloneFeature, CREATE_FEATURE);
 
         this.get(PATH_FEATURE, this.getFeature);
-        this.put(PATH_FEATURE, this.updateFeature);
-        this.patch(PATH_FEATURE, this.patchFeature);
-        this.delete(PATH_FEATURE, this.archiveFeature);
+        this.put(PATH_FEATURE, this.updateFeature, UPDATE_FEATURE);
+        this.patch(PATH_FEATURE, this.patchFeature, UPDATE_FEATURE);
+        this.delete(PATH_FEATURE, this.archiveFeature, UPDATE_FEATURE);
     }
 
     async getFeatures(

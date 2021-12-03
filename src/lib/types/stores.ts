@@ -24,6 +24,7 @@ import { IEnvironmentStore } from './stores/environment-store';
 import { IFeatureToggleClientStore } from './stores/feature-toggle-client-store';
 import { IClientMetricsStoreV2 } from './stores/client-metrics-store-v2';
 import { IUserSplashStore } from './stores/user-splash-store';
+import { IRoleStore } from './stores/role-store';
 
 export interface IUnleashStores {
     accessStore: IAccessStore;
@@ -52,4 +53,5 @@ export interface IUnleashStores {
     userFeedbackStore: IUserFeedbackStore;
     userStore: IUserStore;
     userSplashStore: IUserSplashStore;
+    roleStore: IRoleStore;
 }
